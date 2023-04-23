@@ -1,0 +1,32 @@
+"""
+URL configuration for petshop project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/4.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework import routers
+from petshopapp.api import viewsets as petshopappviewsets
+
+
+route = routers.DefaultRouter()
+route.register(r'home', petshopappviewsets.PetshopappViewSet,
+               basename="Home")
+route.register(r'cadastro', petshopappviewsets.CadastroViewSet,
+               basename="cadastro")
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include(route.urls))
+]
